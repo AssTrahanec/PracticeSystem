@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Список пользователей</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="app">
+    <div class="col-md-2">
+        <label>Id</label>
+        <input type="text" v-model="pid" placeholder="Введите id преподавателя" class="form-control"/><br>
+
+    </div>
+    <button type="submit" @click="getStudentsByHeadId(pid)" id="find" class="btn btn-primary">Найти</button>
+    <table class="table table-condensed table-striped  col-md-6">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Полное имя</th>
+            <th>Кафедра</th>
+            <th>EDS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in practiceHeads">
+            <th scope="row">{{ item.pid }}</th>
+            <td>{{ item.fname }}</td>
+            <td>{{ item.depart }}</td>
+            <td>{{ item.eds }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <section v-if="!errored">
+        <h5>Студенты преподавателя с Id={{ pid }}</h5>
+        <table class="table table-condensed table-striped  col-md-6">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id группы</th>
+                <th>Полное имя</th>
+                <th>Состояние</th>
+                <th>EDS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in students">
+                <th scope="row">{{ item.sid }}</th>
+                <td>{{ item.grid }}</td>
+                <td>{{ item.fname }}</td>
+                <td>{{ item.state }}</td>
+                <td>{{ item.eds }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+
+            data() {
+                return {
+                    practiceHeads: null,
+                    practiceHead: null,
+                    students: null,
+                    pid: null,
+                    errored: false
+                };
+            },
+            methods: {
+                refreshData() {
+                    axios
+                        .get("https://localhost:5001/api/PracticeHeads")
+                        .then(response => (this.practiceHeads = response.data));
+                },
+                getStudentsByHeadId(id) {
+                    axios
+                        .get("https://localhost:5001/api/Custom/" + id)
+                        .then((response) => {
+                            this.students = response.data;
+                            this.errored = false;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true;
+                        })
+                },
+            },
+            mounted() {
+                this.refreshData();
+            }
+        });
+    </script>
+</body>
+</html>
