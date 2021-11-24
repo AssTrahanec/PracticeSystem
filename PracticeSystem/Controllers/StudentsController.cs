@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticeSystem.Data;
 using PracticeSystem.Dtos;
 using PracticeSystem.Dtos.Student;
-using PracticeSystem.Models;
 
 
 namespace PracticeSystem.Controllers
@@ -29,14 +27,14 @@ namespace PracticeSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentReadDto>>> GetAllStudents()
         {
-            return Ok(_mapper.Map<IEnumerable<StudentReadDto>>(await _context.stud.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<StudentReadDto>>(await _context.Studs.ToListAsync()));
         }
 
         //GET api/students/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<StudentReadDto>> GetStudentById(int id)
         {
-            var student = await _context.stud.FirstOrDefaultAsync(x => x.sid == id);
+            var student = await _context.Studs.FirstOrDefaultAsync(x => x.Sid == id);
             if (student != null)
             {
                 return Ok(_mapper.Map<StudentReadDto>(student));
@@ -54,17 +52,17 @@ namespace PracticeSystem.Controllers
                 return BadRequest();
             }
 
-            var studentModel = _mapper.Map<Student>(studentCreateDto);
+            var studentModel = _mapper.Map<Stud>(studentCreateDto);
             await _context.AddAsync(studentModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetStudentById), new {id = studentModel.sid}, studentModel);
+            return CreatedAtAction(nameof(GetStudentById), new {id = studentModel.Sid}, studentModel);
         }
 
         //PUT api/students/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult<StudentReadDto>> UpdateStudent(int id, StudentUpdateDto studentUpdateDto)
         {
-            var student = _context.stud.FirstOrDefaultAsync(x => x.sid == id);
+            var student = _context.Studs.FirstOrDefaultAsync(x => x.Sid == id);
             if (student == null)
                 return NotFound();
             if (studentUpdateDto == null)
@@ -77,10 +75,10 @@ namespace PracticeSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<StudentReadDto>> DeleteStudent(int id)
         {
-            var student = await _context.stud.FirstOrDefaultAsync(x => x.sid == id);
+            var student = await _context.Studs.FirstOrDefaultAsync(x => x.Sid == id);
             if (student == null)
                 return NotFound();
-            _context.stud.Remove(student);
+            _context.Studs.Remove(student);
             await _context.SaveChangesAsync();
             return NoContent();
         }

@@ -1,6 +1,5 @@
 using AutoMapper;
 using PracticeSystem.Dtos.Group;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Profiles
 {
@@ -8,11 +7,11 @@ namespace PracticeSystem.Profiles
     {
         public GroupProfiles()
         {
-            CreateMap<Group, GroupReadDto>();
-            CreateMap<GroupReadDto, Group>();
-            CreateMap<GroupCreateDto, Group>();
-            CreateMap<GroupUpdateDto, Group>();
-            CreateMap<Group, GroupUpdateDto>();
+            CreateMap<Groupp, GroupReadDto>();
+            CreateMap<GroupReadDto, Groupp>();
+            CreateMap<GroupCreateDto, Groupp>();
+            CreateMap<GroupUpdateDto, Groupp>();
+            CreateMap<Groupp, GroupUpdateDto>();
         }
     }
 }

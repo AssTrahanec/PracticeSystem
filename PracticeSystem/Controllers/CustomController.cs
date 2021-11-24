@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticeSystem.Data;
 using PracticeSystem.Dtos;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Controllers
 {
@@ -25,12 +23,12 @@ namespace PracticeSystem.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<StudentReadDto>>> GetStudentByHeadId(int id)
         {
-            if (await _context.phead.FirstOrDefaultAsync(x => x.pid == id) == null)
+            if (await _context.Pheads.FirstOrDefaultAsync(x => x.Pid == id) == null)
                 return NotFound();
-            var practice = await _context.prac.FirstOrDefaultAsync(x => x.pid == id);
+            var practice = await _context.Pracs.FirstOrDefaultAsync(x => x.Pid == id);
             if (practice == null)
                 return NotFound();
-            var students = await _context.stud.Where(x => x.grid == practice.grid).ToListAsync();
+            var students = await _context.Studs.Where(x => x.Grid == practice.Grid).ToListAsync();
             return Ok(_mapper.Map<IEnumerable<StudentReadDto>>(students));
         }
     }

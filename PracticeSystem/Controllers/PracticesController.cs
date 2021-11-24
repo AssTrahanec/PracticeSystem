@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticeSystem.Data;
 using PracticeSystem.Dtos.PracticeDto;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Controllers
 {
@@ -27,14 +25,14 @@ namespace PracticeSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PracticeReadDto>>> GetAllPractices()
         {
-            return Ok(_mapper.Map<IEnumerable<Practice>>(await _context.prac.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<Prac>>(await _context.Pracs.ToListAsync()));
         }
 
         //GET api/Practices/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<PracticeReadDto>> GetPracticeById(int id)
         {
-            var practice = await _context.prac.FirstOrDefaultAsync(x => x.pracid == id);
+            var practice = await _context.Pracs.FirstOrDefaultAsync(x => x.Pracid == id);
             if (practice == null)
             {
                 return NotFound();
@@ -49,17 +47,17 @@ namespace PracticeSystem.Controllers
         {
             if (practiceCreateDto == null)
                 return BadRequest();
-            var practiceModel = _mapper.Map<Practice>(practiceCreateDto);
-            await _context.prac.AddAsync(practiceModel);
+            var practiceModel = _mapper.Map<Prac>(practiceCreateDto);
+            await _context.Pracs.AddAsync(practiceModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPracticeById), new {id = practiceModel.pracid}, practiceModel);
+            return CreatedAtAction(nameof(GetPracticeById), new {id = practiceModel.Pracid}, practiceModel);
         }
 
         //PUT api/Practices/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult<PracticeReadDto>> UpdatePractice(int id, PracticeUpdateDto practiceUpdateDto)
         {
-            var practice = await _context.prac.FirstOrDefaultAsync(x => x.pracid == id);
+            var practice = await _context.Pracs.FirstOrDefaultAsync(x => x.Pracid == id);
             if (practice == null)
                 return NotFound();
             if (practiceUpdateDto == null)
@@ -73,7 +71,7 @@ namespace PracticeSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<PracticeReadDto>> DeletePractice(int id)
         {
-            var practice = await _context.prac.FirstOrDefaultAsync(x => x.pracid == id);
+            var practice = await _context.Pracs.FirstOrDefaultAsync(x => x.Pracid == id);
             if (practice == null)
                 return NotFound();
             _context.Remove(practice);
