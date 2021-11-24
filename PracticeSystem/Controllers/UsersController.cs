@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticeSystem.Data;
 using PracticeSystem.Dtos;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Controllers
 {
@@ -23,24 +21,24 @@ namespace PracticeSystem.Controllers
             _context = context;
         }
 
-        //GET api/users
+        //GET api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsers()
         {
-            return Ok(_mapper.Map<IEnumerable<UserReadDto>>(await _context.users.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<UserReadDto>>(await _context.Users.ToListAsync()));
         }
 
-        //GET api/users/{id}
+        //GET api/Users/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReadDto>> GetUserById(int id)
         {
-            var user = await _context.users.FirstOrDefaultAsync(x => x.uid == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Uid == id);
             if (user != null)
                 return Ok(_mapper.Map<UserReadDto>(user));
             return NotFound();
         }
 
-        //POST api/users
+        //POST api/Users
         [HttpPost]
         public async Task<ActionResult<UserReadDto>> CreateUser(UserCreateDto userCreateDto)
         {
@@ -52,14 +50,14 @@ namespace PracticeSystem.Controllers
             var userModel = _mapper.Map<User>(userCreateDto);
             await _context.AddAsync(userModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetUserById), new {id = userModel.uid}, userModel);
+            return CreatedAtAction(nameof(GetUserById), new {id = userModel.Uid}, userModel);
         }
 
-        //PUT api/users/{id}
+        //PUT api/Users/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUser(int id, UserUpdateDto userUpdateDto)
         {
-            var user = await _context.users.FirstOrDefaultAsync(x => x.uid == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Uid == id);
             if (user == null)
                 return NotFound();
 
@@ -71,14 +69,14 @@ namespace PracticeSystem.Controllers
             return NoContent();
         }
 
-        //DELETE api/users/{id}
+        //DELETE api/Users/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            var user = await _context.users.FirstOrDefaultAsync(x => x.uid == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Uid == id);
             if (user == null)
                 return NotFound();
-            _context.users.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return NoContent();
         }

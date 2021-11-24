@@ -1,6 +1,5 @@
 using AutoMapper;
 using PracticeSystem.Dtos;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Profiles
 {

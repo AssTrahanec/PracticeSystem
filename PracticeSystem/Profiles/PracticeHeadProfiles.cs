@@ -1,6 +1,5 @@
 using AutoMapper;
 using PracticeSystem.Dtos.PracticeHeadsDto;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Profiles
 {
@@ -8,11 +7,11 @@ namespace PracticeSystem.Profiles
     {
         public PracticeHeadProfiles()
         {
-            CreateMap<PracticeHead, PracticeHeadReadDto>();
-            CreateMap<PracticeHeadReadDto, PracticeHead>();
-            CreateMap<PracticeHeadCreateDto, PracticeHead>();
-            CreateMap<PracticeHeadUpdateDto, PracticeHead>();
-            CreateMap<PracticeHead, PracticeHeadUpdateDto>();
+            CreateMap<Phead, PracticeHeadReadDto>();
+            CreateMap<PracticeHeadReadDto, Phead>();
+            CreateMap<PracticeHeadCreateDto, Phead>();
+            CreateMap<PracticeHeadUpdateDto, Phead>();
+            CreateMap<Phead, PracticeHeadUpdateDto>();
         }
     }
 }

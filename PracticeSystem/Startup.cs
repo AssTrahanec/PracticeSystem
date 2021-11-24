@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PracticeSystem.Data;
 
 namespace PracticeSystem
 {
@@ -32,7 +31,7 @@ namespace PracticeSystem
             services.AddDbContext<PracticeSystemContext>(options => options.UseNpgsql(connection));
 
             services.AddControllers();
-
+            services.AddCors();
             services.AddMvc();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -45,7 +44,11 @@ namespace PracticeSystem
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        {   
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());   
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

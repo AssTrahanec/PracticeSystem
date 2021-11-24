@@ -1,7 +1,6 @@
 using AutoMapper;
 using PracticeSystem.Dtos;
 using PracticeSystem.Dtos.Student;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Profiles
 {
@@ -9,11 +8,11 @@ namespace PracticeSystem.Profiles
     {
         public StudentProfiles()
         {
-            CreateMap<Student, StudentReadDto>();
-            CreateMap<StudentReadDto, Student>();
-            CreateMap<StudentCreateDto, Student>();
-            CreateMap<StudentUpdateDto, Student>();
-            CreateMap<Student, StudentUpdateDto>();
+            CreateMap<Stud, StudentReadDto>();
+            CreateMap<StudentReadDto, Stud>();
+            CreateMap<StudentCreateDto, Stud>();
+            CreateMap<StudentUpdateDto, Stud>();
+            CreateMap<Stud, StudentUpdateDto>();
         }
     }
 }

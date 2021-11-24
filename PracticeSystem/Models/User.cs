@@ -1,12 +1,17 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
-namespace PracticeSystem.Models
+#nullable disable
+
+namespace PracticeSystem
 {
-    public class User
+    public partial class User
     {
-        [Key]
-        public int uid { get; set; }
-        public string login { get; set; }
-        public string password { get; set; }
+        public int Uid { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+
+        public virtual Phead Phead { get; set; }
+        public virtual Stud Stud { get; set; }
     }
 }

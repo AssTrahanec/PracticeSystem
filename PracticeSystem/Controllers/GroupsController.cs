@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticeSystem.Data;
 using PracticeSystem.Dtos.Group;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Controllers
 {
@@ -27,14 +25,14 @@ namespace PracticeSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GroupReadDto>>> GetAllGroups()
         {
-            return Ok(_mapper.Map<IEnumerable<GroupReadDto>>(await _context.groupp.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<GroupReadDto>>(await _context.Groupps.ToListAsync()));
         }
 
         //GET api/Groups/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<GroupReadDto>> GetGroupById(int id)
         {
-            var group = await _context.groupp.FirstOrDefaultAsync(x => x.grid == id);
+            var group = await _context.Groupps.FirstOrDefaultAsync(x => x.Grid == id);
             if (group != null)
                 return Ok(_mapper.Map<GroupReadDto>(group));
             return NotFound();
@@ -46,17 +44,17 @@ namespace PracticeSystem.Controllers
         {
             if (groupCreateDto == null)
                 return BadRequest();
-            var groupModel = _mapper.Map<Group>(groupCreateDto);
-            await _context.groupp.AddAsync(groupModel);
+            var groupModel = _mapper.Map<Groupp>(groupCreateDto);
+            await _context.Groupps.AddAsync(groupModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetGroupById), new {id = groupModel.grid}, groupModel);
+            return CreatedAtAction(nameof(GetGroupById), new {id = groupModel.Grid}, groupModel);
         }
 
         //PUT api/Groups/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult<GroupReadDto>> UpdateGroup(int id, GroupUpdateDto groupUpdateDto)
         {
-            var group = await _context.groupp.FirstOrDefaultAsync(x => x.grid == id);
+            var group = await _context.Groupps.FirstOrDefaultAsync(x => x.Grid == id);
             if (groupUpdateDto == null)
                 return BadRequest();
             if (group == null)
@@ -70,13 +68,13 @@ namespace PracticeSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<GroupReadDto>> DeleteGroup(int id)
         {
-            var group = await _context.groupp.FirstOrDefaultAsync(x => x.grid == id);
+            var group = await _context.Groupps.FirstOrDefaultAsync(x => x.Grid == id);
             if (group == null)
             {
                 return NotFound();
             }
 
-            _context.groupp.Remove(group);
+            _context.Groupps.Remove(group);
             await _context.SaveChangesAsync();
             return NoContent();
         }

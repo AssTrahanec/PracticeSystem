@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PracticeSystem.Data;
 using PracticeSystem.Dtos.PracticeDto;
 using PracticeSystem.Dtos.PracticeHeadsDto;
-using PracticeSystem.Models;
 
 namespace PracticeSystem.Controllers
 {
@@ -28,14 +26,14 @@ namespace PracticeSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PracticeHeadReadDto>>> GetAllPracticeHeads()
         {
-            return Ok(_mapper.Map<IEnumerable<PracticeHeadReadDto>>(await _context.phead.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<PracticeHeadReadDto>>(await _context.Pheads.ToListAsync()));
         }
 
         //GET api/PracticeHeads/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<PracticeHeadReadDto>> GetPracticeHeadById(int id)
         {
-            var practiceHead = await _context.phead.FirstOrDefaultAsync(x => x.pid == id);
+            var practiceHead = await _context.Pheads.FirstOrDefaultAsync(x => x.Pid == id);
             if (practiceHead == null)
                 return NotFound();
             return Ok(_mapper.Map<PracticeHeadReadDto>(practiceHead));
@@ -47,10 +45,10 @@ namespace PracticeSystem.Controllers
         {
             if (practiceHeadCreateDto == null)
                 return BadRequest();
-            var practiceHeadModel = _mapper.Map<PracticeHead>(practiceHeadCreateDto);
+            var practiceHeadModel = _mapper.Map<Phead>(practiceHeadCreateDto);
             await _context.AddAsync(practiceHeadModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPracticeHeadById), new {id = practiceHeadModel.pid}, practiceHeadModel);
+            return CreatedAtAction(nameof(GetPracticeHeadById), new {id = practiceHeadModel.Pid}, practiceHeadModel);
         }
 
         //PUT api/PracticeHeads/{id}
@@ -58,7 +56,7 @@ namespace PracticeSystem.Controllers
         public async Task<ActionResult<PracticeReadDto>> UpdatePracticeHead(int id,
             PracticeHeadUpdateDto practiceHeadUpdateDto)
         {
-            var practiceHead = await _context.phead.FirstOrDefaultAsync(x => x.pid == id);
+            var practiceHead = await _context.Pheads.FirstOrDefaultAsync(x => x.Pid == id);
             if (practiceHead == null)
                 return NotFound();
             if (practiceHeadUpdateDto == null)
@@ -71,7 +69,7 @@ namespace PracticeSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<PracticeReadDto>> DeletePracticeHead(int id)
         {
-            var practiceHead = await _context.phead.FirstOrDefaultAsync(x => x.pid == id);
+            var practiceHead = await _context.Pheads.FirstOrDefaultAsync(x => x.Pid == id);
             if (practiceHead == null)
                 return NotFound();
             _context.Remove(practiceHead);
