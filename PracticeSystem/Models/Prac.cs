@@ -26,7 +26,7 @@ namespace PracticeSystem
         public int Pid { get; set; }
         public int Grid { get; set; }
         public string Type { get; set; }
-        public int? Name { get; set; }
+        public string Name { get; set; }
         public DateTime? Datestart { get; set; }
         public DateTime? Dateend { get; set; }
         public int Pracid { get; set; }
