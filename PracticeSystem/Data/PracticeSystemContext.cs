@@ -22,7 +22,7 @@ namespace PracticeSystem
         public virtual DbSet<Phead> Pheads { get; set; }
         public virtual DbSet<Prac> Pracs { get; set; }
         public virtual DbSet<Pracani> Pracanis { get; set; }
-        public virtual DbSet<Pracanlp> Pracanlps { get; set; }
+        public virtual DbSet<Pracanip> Pracanlps { get; set; }
         public virtual DbSet<Pracapp> Pracapps { get; set; }
         public virtual DbSet<Pracbpdp> Pracbpdps { get; set; }
         public virtual DbSet<Pracbptp> Pracbptps { get; set; }
@@ -209,7 +209,7 @@ namespace PracticeSystem
                     .HasConstraintName("key_foreign_pracani_stud");
             });
 
-            modelBuilder.Entity<Pracanlp>(entity =>
+            modelBuilder.Entity<Pracanip>(entity =>
             {
                 entity.HasKey(e => new { e.Sid, e.Pracid })
                     .HasName("pracanlp_pkey");

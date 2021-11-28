@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PracticeSystem
 {
-    public partial class Pracanlp
+    public partial class Pracanip
     {
         public int Sid { get; set; }
         public int Pracid { get; set; }

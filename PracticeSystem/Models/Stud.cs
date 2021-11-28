@@ -11,7 +11,7 @@ namespace PracticeSystem
         {
             Pds = new HashSet<Pd>();
             Pracanis = new HashSet<Pracani>();
-            Pracanlps = new HashSet<Pracanlp>();
+            Pracanlps = new HashSet<Pracanip>();
             Pracapps = new HashSet<Pracapp>();
             Pracbpdps = new HashSet<Pracbpdp>();
             Pracbptps = new HashSet<Pracbptp>();
@@ -33,7 +33,7 @@ namespace PracticeSystem
         public virtual User SidNavigation { get; set; }
         public virtual ICollection<Pd> Pds { get; set; }
         public virtual ICollection<Pracani> Pracanis { get; set; }
-        public virtual ICollection<Pracanlp> Pracanlps { get; set; }
+        public virtual ICollection<Pracanip> Pracanlps { get; set; }
         public virtual ICollection<Pracapp> Pracapps { get; set; }
         public virtual ICollection<Pracbpdp> Pracbpdps { get; set; }
         public virtual ICollection<Pracbptp> Pracbptps { get; set; }
