@@ -25,7 +25,7 @@ namespace PracticeSystem.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PracticeReadDto>>> GetAllPractices()
         {
-            return Ok(_mapper.Map<IEnumerable<PracticeReadDto>>(await _context.Pracs.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<Prac>>(await _context.Pracs.ToListAsync()));
         }
 
         //GET api/Practices/{id}
